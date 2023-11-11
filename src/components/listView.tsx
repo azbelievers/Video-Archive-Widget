@@ -45,6 +45,7 @@ export default function ListView({ onClick }: ListViewProps) {
         <p>Loading...</p>
       ) : (
         <>
+          {!data && <p>No videos found</p>}
           {data && (
             <Box width="100%">
               <List>
