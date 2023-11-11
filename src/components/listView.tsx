@@ -10,6 +10,7 @@ import {
   ListItemContent,
   Stack,
   ListDivider,
+  ListSubheader,
 } from "@mui/joy";
 
 interface ListViewProps {
@@ -18,12 +19,8 @@ interface ListViewProps {
 export default function ListView({ onClick }: ListViewProps) {
   const [page, setPage] = useState(0);
 
-  const { data, isError, isLoading } = useQuery(
-    "allVods",
-    () => http.getVODs(page),
-    {
-      refetchInterval: 1000,
-    },
+  const { data, isError, isLoading } = useQuery("allVods", () =>
+    http.getVODs(page),
   );
 
   function formatTime(duration: number) {
@@ -45,8 +42,7 @@ export default function ListView({ onClick }: ListViewProps) {
         <p>Loading...</p>
       ) : (
         <>
-          {!data && <p>No videos found</p>}
-          {data && (
+          {data && data.length > 0 ? (
             <Box width="100%">
               <List>
                 {data.map((video) => (
@@ -86,6 +82,8 @@ export default function ListView({ onClick }: ListViewProps) {
                 </Button>
               </Stack>
             </Box>
+          ) : (
+            <ListSubheader>No videos found</ListSubheader>
           )}
         </>
       )}
