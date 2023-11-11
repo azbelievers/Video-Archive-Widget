@@ -1,6 +1,16 @@
 import http from "../lib/http.ts";
 import { useQuery } from "react-query";
 import { useState } from "react";
+import {
+  Button,
+  Container,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemContent,
+  ListItemDecorator,
+  Stack,
+} from "@mui/joy";
 
 interface ListViewProps {
   onClick: (item: string) => void;
@@ -16,27 +26,60 @@ export default function ListView({ onClick }: ListViewProps) {
     },
   );
 
+  function formatTime(duration: number) {
+    const date = new Date(0);
+    date.setSeconds(duration);
+    return date.toISOString().substring(11, 19);
+  }
+
+  function formatDate(date: number) {
+    const dateObj = new Date(date);
+    return dateObj.toDateString();
+  }
+
   return (
-    <div>
-      <h1>Video Archive</h1>
+    <Stack direction="column" alignItems="center">
       {isError && <p>Something went wrong...</p>}
 
       {isLoading ? (
         <p>Loading...</p>
       ) : (
         <>
-          {data?.map((video) => (
-            <div key={video.vodId} onClick={() => onClick(video.filePath)}>
-              <p>{video.vodName}</p>
-              <p>{video.creationDate}</p>
-            </div>
-          ))}
+          {data && (
+            <Container>
+              <List>
+                {data.map((video) => (
+                  <ListItem
+                    key={video.vodId}
+                    onClick={() => onClick(video.filePath)}
+                  >
+                    <ListItemButton>
+                      <ListItemContent>
+                        <Stack direction="row" spacing={2}>
+                          <strong>{formatDate(video.creationDate)}</strong>
+                          <span>Length: {formatTime(video.duration)}</span>
+                        </Stack>
+                      </ListItemContent>
+                      <ListItemDecorator />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+              </List>
+              <Stack direction="row" spacing={2} alignContent="center">
+                <Button disabled={page === 0} onClick={() => setPage(page - 1)}>
+                  Previous Page
+                </Button>
+                <Button
+                  disabled={data.length < 100 ?? false}
+                  onClick={() => setPage(page + 1)}
+                >
+                  Next Page
+                </Button>
+              </Stack>
+            </Container>
+          )}
         </>
       )}
-      <div>
-        <button onClick={() => setPage(page + 1)}>Previous Page</button>
-        <button onClick={() => setPage(page + 1)}>Next Page</button>
-      </div>
-    </div>
+    </Stack>
   );
 }

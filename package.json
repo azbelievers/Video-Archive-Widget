@@ -1,7 +1,9 @@
 {
-  "name": "video-archive",
-  "private": true,
+  "name": "abc-video-archive-widget",
+  "private": false,
   "version": "0.0.0",
+  "author": "Mitch Alderson, @farawaysouthwest",
+  "license": "Gnu GPL v3",
   "type": "module",
   "scripts": {
     "dev": "vite",

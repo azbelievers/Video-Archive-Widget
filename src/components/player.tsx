@@ -1,4 +1,5 @@
 import abcIcon from "../assets/abc-icon.png";
+import { Box, Container } from "@mui/joy";
 interface PlayerProps {
   videoId: string | null;
 }
@@ -9,20 +10,14 @@ export default function VideoPlayer({ videoId }: PlayerProps) {
   }/LiveApp/play.html?id=${videoId}&playOrder=vod&autoplay=false`;
 
   return (
-    <div>
+    <Container>
       {videoId ? (
-        <iframe
-          width="560"
-          height="315"
-          src={url}
-          frameBorder="0"
-          allowFullScreen
-        />
+        <iframe src={url} allowFullScreen />
       ) : (
-        <div>
-          <img src={abcIcon} />
-        </div>
+        <Box>
+          <img src={abcIcon} alt="Arizona Believers Church" />
+        </Box>
       )}
-    </div>
+    </Container>
   );
 }
