@@ -26,7 +26,7 @@ export default function ListView({ onClick }: ListViewProps) {
 
   function formatTime(duration: number) {
     const date = new Date(0);
-    date.setSeconds(duration);
+    date.setMilliseconds(duration);
     return date.toISOString().substring(11, 19);
   }
 
@@ -48,7 +48,6 @@ export default function ListView({ onClick }: ListViewProps) {
               <List>
                 {data.map((video) => (
                   <>
-                    <ListDivider />
                     <ListItem
                       key={video.vodId}
                       onClick={() => onClick(video.filePath)}
@@ -56,7 +55,9 @@ export default function ListView({ onClick }: ListViewProps) {
                       <ListItemButton>
                         <ListItemContent>
                           <Stack direction="row" spacing={3}>
-                            <strong>{formatDate(video.creationDate)}</strong>
+                            <ListSubheader>
+                              <strong>{formatDate(video.creationDate)}</strong>
+                            </ListSubheader>
                             <ListSubheader>
                               Length: {formatTime(video.duration)}
                             </ListSubheader>
@@ -64,6 +65,7 @@ export default function ListView({ onClick }: ListViewProps) {
                         </ListItemContent>
                       </ListItemButton>
                     </ListItem>
+                    <ListDivider />
                   </>
                 ))}
               </List>
