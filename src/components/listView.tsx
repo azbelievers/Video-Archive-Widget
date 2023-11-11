@@ -3,13 +3,13 @@ import { useQuery } from "react-query";
 import { useState } from "react";
 import {
   Button,
-  Container,
+  Box,
   List,
   ListItem,
   ListItemButton,
   ListItemContent,
-  ListItemDecorator,
   Stack,
+  ListDivider,
 } from "@mui/joy";
 
 interface ListViewProps {
@@ -46,37 +46,45 @@ export default function ListView({ onClick }: ListViewProps) {
       ) : (
         <>
           {data && (
-            <Container>
+            <Box width="100%">
               <List>
                 {data.map((video) => (
-                  <ListItem
-                    key={video.vodId}
-                    onClick={() => onClick(video.filePath)}
-                  >
-                    <ListItemButton>
-                      <ListItemContent>
-                        <Stack direction="row" spacing={2}>
-                          <strong>{formatDate(video.creationDate)}</strong>
-                          <span>Length: {formatTime(video.duration)}</span>
-                        </Stack>
-                      </ListItemContent>
-                      <ListItemDecorator />
-                    </ListItemButton>
-                  </ListItem>
+                  <>
+                    <ListDivider />
+                    <ListItem
+                      key={video.vodId}
+                      onClick={() => onClick(video.filePath)}
+                    >
+                      <ListItemButton>
+                        <ListItemContent>
+                          <Stack direction="row" spacing={3}>
+                            <strong>{formatDate(video.creationDate)}</strong>
+                            <span>Length: {formatTime(video.duration)}</span>
+                          </Stack>
+                        </ListItemContent>
+                      </ListItemButton>
+                    </ListItem>
+                  </>
                 ))}
               </List>
-              <Stack direction="row" spacing={2} alignContent="center">
-                <Button disabled={page === 0} onClick={() => setPage(page - 1)}>
+              <Stack direction="row" spacing={2} justifyContent="center">
+                <Button
+                  size="lg"
+                  disabled={page === 0}
+                  onClick={() => setPage(page - 1)}
+                >
                   Previous Page
                 </Button>
                 <Button
+                  size="lg"
+                  color="primary"
                   disabled={data.length < 100 ?? false}
                   onClick={() => setPage(page + 1)}
                 >
                   Next Page
                 </Button>
               </Stack>
-            </Container>
+            </Box>
           )}
         </>
       )}

@@ -1,23 +1,22 @@
 import abcIcon from "../assets/abc-icon.png";
-import { Box, Container } from "@mui/joy";
+import { Box, Stack } from "@mui/joy";
+import ReactPlayer from "react-player";
 interface PlayerProps {
-  videoId: string | null;
+  videoUrl: string | null;
 }
 
-export default function VideoPlayer({ videoId }: PlayerProps) {
-  const url = `${
-    import.meta.env.VITE_SERVER_URL
-  }/LiveApp/play.html?id=${videoId}&playOrder=vod&autoplay=false`;
+export default function VideoPlayer({ videoUrl }: PlayerProps) {
+  const url = `${import.meta.env.VITE_MEDIA_URL}/${videoUrl}`;
 
   return (
-    <Container>
-      {videoId ? (
-        <iframe src={url} allowFullScreen />
+    <Box maxWidth="100%">
+      {videoUrl ? (
+        <ReactPlayer width="100%" height="20rem" url={url} controls />
       ) : (
-        <Box>
-          <img src={abcIcon} alt="Arizona Believers Church" />
-        </Box>
+        <Stack height="20rem" justifyContent="center">
+          <img width="100%" src={abcIcon} alt="Arizona Believers Church" />
+        </Stack>
       )}
-    </Container>
+    </Box>
   );
 }

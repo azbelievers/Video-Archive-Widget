@@ -10,14 +10,8 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Stack
-        direction="column"
-        justifyItems="center"
-        maxWidth="max-content"
-        alignItems="center"
-        spacing={2}
-      >
-        <VideoPlayer videoId={videoId} />
+      <Stack direction="column" alignItems="center" spacing={2} useFlexGap>
+        <VideoPlayer videoUrl={videoId} />
         <ListView onClick={(id) => setVideoId(id)} />
       </Stack>
     </QueryClientProvider>
