@@ -55,6 +55,7 @@ export default function ListView({ onClick }: ListViewProps) {
                       <ListItemButton>
                         <ListItemContent>
                           <Stack direction="row" spacing={3}>
+                            <ListSubheader>{video.streamName}</ListSubheader>
                             <ListSubheader>
                               <strong>{formatDate(video.creationDate)}</strong>
                             </ListSubheader>
