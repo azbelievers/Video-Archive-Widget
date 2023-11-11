@@ -11,6 +11,7 @@ import {
   Stack,
   ListDivider,
   ListSubheader,
+  CircularProgress,
 } from "@mui/joy";
 
 interface ListViewProps {
@@ -39,7 +40,7 @@ export default function ListView({ onClick }: ListViewProps) {
       {isError && <p>Something went wrong...</p>}
 
       {isLoading ? (
-        <p>Loading...</p>
+        <CircularProgress />
       ) : (
         <>
           {data && data.length > 0 ? (
@@ -56,7 +57,9 @@ export default function ListView({ onClick }: ListViewProps) {
                         <ListItemContent>
                           <Stack direction="row" spacing={3}>
                             <strong>{formatDate(video.creationDate)}</strong>
-                            <span>Length: {formatTime(video.duration)}</span>
+                            <ListSubheader>
+                              Length: {formatTime(video.duration)}
+                            </ListSubheader>
                           </Stack>
                         </ListItemContent>
                       </ListItemButton>
