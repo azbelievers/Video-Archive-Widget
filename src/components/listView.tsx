@@ -46,29 +46,35 @@ export default function ListView({ onClick }: ListViewProps) {
           {data && data.length > 0 ? (
             <Box width="100%">
               <List>
-                {data.map((video) => (
-                  <>
-                    <ListItem
-                      key={video.vodId}
-                      onClick={() => onClick(video.filePath)}
-                    >
-                      <ListItemButton>
-                        <ListItemContent>
-                          <Stack direction="row" spacing={3}>
-                            <ListSubheader>{video.streamName}</ListSubheader>
-                            <ListSubheader>
-                              <strong>{formatDate(video.creationDate)}</strong>
-                            </ListSubheader>
-                            <ListSubheader>
-                              Length: {formatTime(video.duration)}
-                            </ListSubheader>
-                          </Stack>
-                        </ListItemContent>
-                      </ListItemButton>
-                    </ListItem>
-                    <ListDivider />
-                  </>
-                ))}
+                {data
+                  .sort((a, b) => {
+                    return b.creationDate - a.creationDate;
+                  })
+                  .map((video) => (
+                    <>
+                      <ListItem
+                        key={video.vodId}
+                        onClick={() => onClick(video.filePath)}
+                      >
+                        <ListItemButton>
+                          <ListItemContent>
+                            <Stack direction="row" spacing={3}>
+                              <ListSubheader>{video.streamName}</ListSubheader>
+                              <ListSubheader>
+                                <strong>
+                                  {formatDate(video.creationDate)}
+                                </strong>
+                              </ListSubheader>
+                              <ListSubheader>
+                                Length: {formatTime(video.duration)}
+                              </ListSubheader>
+                            </Stack>
+                          </ListItemContent>
+                        </ListItemButton>
+                      </ListItem>
+                      <ListDivider />
+                    </>
+                  ))}
               </List>
               <Stack direction="row" spacing={2} justifyContent="center">
                 <Button
